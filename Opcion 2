@@ -1,0 +1,254 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Ingrediente {
+    private String nombre;
+    private int cantidad;
+    private String unidad;
+
+    public Ingrediente(String nombre, int cantidad, String unidad) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.unidad = unidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+}
+
+class PasoPreparacion {
+    private int id;
+    private String descripcion;
+
+    public PasoPreparacion(int id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+}
+
+class Receta {
+    private String nombre;
+    private String categoria;
+    private List<Ingrediente> ingredientes;
+    private List<PasoPreparacion> pasos;
+
+    public Receta(String nombre, String categoria) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.ingredientes = new ArrayList<>();
+        this.pasos = new ArrayList<>();
+    }
+
+    public void agregarIngrediente(Ingrediente ingrediente) {
+        ingredientes.add(ingrediente);
+    }
+
+    public void eliminarIngrediente(Ingrediente ingrediente) {
+        ingredientes.remove(ingrediente);
+    }
+
+    public void editarIngrediente(Ingrediente ingrediente, String nombre, int cantidad, String unidad) {
+        ingrediente.setNombre(nombre);
+        ingrediente.setCantidad(cantidad);
+        ingrediente.setUnidad(unidad);
+    }
+
+    public void agregarPaso(PasoPreparacion paso) {
+        pasos.add(paso);
+    }
+
+    public void eliminarPaso(PasoPreparacion paso) {
+        pasos.remove(paso);
+    }
+
+    public void editarPaso(PasoPreparacion paso, String descripcion) {
+        paso.setDescripcion(descripcion);
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public List<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public List<PasoPreparacion> getPasos() {
+        return pasos;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el nombre de la receta: ");
+        String nombreReceta = scanner.nextLine();
+        System.out.print("Ingrese la categoría de la receta: ");
+        String categoriaReceta = scanner.nextLine();
+
+        Receta receta = new Receta(nombreReceta, categoriaReceta);
+
+        int opcion;
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Agregar ingrediente");
+            System.out.println("2. Eliminar ingrediente");
+            System.out.println("3. Editar ingrediente");
+            System.out.println("4. Agregar paso de preparación");
+            System.out.println("5. Eliminar paso de preparación");
+            System.out.println("6. Editar paso de preparación");
+            System.out.println("7. Mostrar receta");
+            System.out.println("8. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el nombre del ingrediente: ");
+                    String nombreIngrediente = scanner.nextLine();
+                    System.out.print("Ingrese la cantidad del ingrediente: ");
+                    int cantidadIngrediente = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                    System.out.print("Ingrese la unidad del ingrediente: ");
+                    String unidadIngrediente = scanner.nextLine();
+                    Ingrediente ingrediente = new Ingrediente(nombreIngrediente, cantidadIngrediente, unidadIngrediente);
+                    receta.agregarIngrediente(ingrediente);
+                    break;
+                case 2:
+                    System.out.print("Ingrese el nombre del ingrediente a eliminar: ");
+                    String nombreIngredienteEliminar = scanner.nextLine();
+                    List<Ingrediente> ingredientesRecetaEliminar = receta.getIngredientes();
+                    for (Ingrediente ingredienteEliminar : ingredientesRecetaEliminar) {
+                        if (ingredienteEliminar.getNombre().equals(nombreIngredienteEliminar)) {
+                            receta.eliminarIngrediente(ingredienteEliminar);
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.print("Ingrese el nombre del ingrediente a editar: ");
+                    String nombreIngredienteEditar = scanner.nextLine();
+                    List<Ingrediente> ingredientesRecetaEditar = receta.getIngredientes();
+                    for (Ingrediente ingredienteEditar : ingredientesRecetaEditar) {
+                        if (ingredienteEditar.getNombre().equals(nombreIngredienteEditar)) {
+                            System.out.print("Ingrese el nuevo nombre del ingrediente: ");
+                            String nuevoNombreIngrediente = scanner.nextLine();
+                            System.out.print("Ingrese la nueva cantidad del ingrediente: ");
+                            int nuevaCantidadIngrediente = scanner.nextInt();
+                            scanner.nextLine(); // Consumir el salto de línea
+                            System.out.print("Ingrese la nueva unidad del ingrediente: ");
+                            String nuevaUnidadIngrediente = scanner.nextLine();
+                            receta.editarIngrediente(ingredienteEditar, nuevoNombreIngrediente, nuevaCantidadIngrediente, nuevaUnidadIngrediente);
+                            break;
+                        }
+                    }
+                    break;
+                case 4:
+                    System.out.print("Ingrese la cantidad de pasos de preparación: ");
+                    int cantidadPasos = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+
+                    for (int i = 0; i < cantidadPasos; i++) {
+                        System.out.print("Ingrese el paso " + (i + 1) + ": ");
+                        String descripcionPaso = scanner.nextLine();
+                        PasoPreparacion paso = new PasoPreparacion(i + 1, descripcionPaso);
+                        receta.agregarPaso(paso);
+                    }
+                    break;
+                case 5:
+                    System.out.print("Ingrese el ID del paso de preparación a eliminar: ");
+                    int idPasoEliminar = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                    List<PasoPreparacion> pasosRecetaEliminar = receta.getPasos();
+                    for (PasoPreparacion pasoEliminar : pasosRecetaEliminar) {
+                        if (pasoEliminar.getId() == idPasoEliminar) {
+                            receta.eliminarPaso(pasoEliminar);
+                            break;
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.print("Ingrese el ID del paso de preparación a editar: ");
+                    int idPasoEditar = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea
+                    List<PasoPreparacion> pasosRecetaEditar = receta.getPasos();
+                    for (PasoPreparacion pasoEditar : pasosRecetaEditar) {
+                        if (pasoEditar.getId() == idPasoEditar) {
+                            System.out.print("Ingrese la nueva descripción del paso de preparación: ");
+                            String nuevaDescripcionPaso = scanner.nextLine();
+                            receta.editarPaso(pasoEditar, nuevaDescripcionPaso);
+                            break;
+                        }
+                    }
+                    break;
+                case 7:
+                    System.out.println("\nReceta: " + receta.getNombre());
+                    System.out.println("Categoría: " + receta.getCategoria());
+
+                    System.out.println("\nIngredientes:");
+                    List<Ingrediente> ingredientesReceta = receta.getIngredientes();
+                    for (Ingrediente ingredientes : ingredientesReceta) {
+                        System.out.println("- " + ingrediente.getNombre() + ": " + ingrediente.getCantidad() + " " + ingrediente.getUnidad());
+                    }
+
+                    System.out.println("\nPasos de Preparación:");
+                    List<PasoPreparacion> pasosReceta = receta.getPasos();
+                    for (PasoPreparacion paso : pasosReceta) {
+                        System.out.println(paso.getId() + ". " + paso.getDescripcion());
+                    }
+                    break;
+                case 8:
+                    System.out.println("Saliendo del programa.");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+                    break;
+            }
+        } while (opcion != 8);
+    }
+}
+
